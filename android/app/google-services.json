@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "494328701055",
+    "project_id": "contact-manager-e881c",
+    "storage_bucket": "contact-manager-e881c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:494328701055:android:69c2640c0b8fbfa2f75f4a",
+        "android_client_info": {
+          "package_name": "com.example.contact_manager"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAj2xwsln7rlPGjNnz2jkPk3JDFi_SX3XI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
