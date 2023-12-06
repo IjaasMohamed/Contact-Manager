@@ -1,4 +1,6 @@
+import 'package:contact_manager/pages/add_contact_page.dart';
 import 'package:flutter/material.dart';
+import 'package:iconly/iconly.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -9,19 +11,16 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("My Contacts"),
       ),
-      body: const Center(
-        child: Text(
-          "Mock Contact List",
-          style: TextStyle(fontSize: 18.0),
-        ),
-      ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          // Mock action for adding a contact
-          print("Add Contact Pressed");
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const AddContactPage(),
+              ));
         },
         label: const Text("Add Contact"),
-        icon: const Icon(Icons.add),
+        icon: const Icon(IconlyBroken.document),
       ),
     );
   }
