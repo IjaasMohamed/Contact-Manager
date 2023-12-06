@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:contact_manager/theme/theme.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 
@@ -14,6 +16,30 @@ class _AddContactPageState extends State<AddContactPage> {
   final nameController = TextEditingController();
   final phoneController = TextEditingController();
   final emailController = TextEditingController();
+  
+  void addContact() async {
+    if (_formKey.currentState!.validate()){
+      try {
+        await FirebaseFirestore.instance.collection("contacts").add({
+          "name": nameController.text.trim(),
+          "phone":phoneController.text.trim(),
+          "email":emailController.text.trim(),
+        });
+        if (mounted) {
+          Navigator.pop(context);
+        }
+      } on FirebaseException {
+        ScaffoldMessenger.of(context).showSnackBar( 
+        const SnackBar(content: Text("Failed to add contact")),
+      );
+      }
+    } 
+    else {
+      ScaffoldMessenger.of(context).showSnackBar( 
+          const SnackBar(content: Text("Please fill all the fields")),
+      );
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,6 +50,7 @@ class _AddContactPageState extends State<AddContactPage> {
         padding: const EdgeInsets.all(14),
         children: [
           Form(
+            key: _formKey,
             child: Column(
               children: [
                 TextFormField(
@@ -79,9 +106,10 @@ class _AddContactPageState extends State<AddContactPage> {
                 SizedBox(
                     width: double.infinity,
                     child: ElevatedButton.icon(
-                        onPressed: () {},
+                        onPressed: addContact,
                         icon: const Icon(IconlyBroken.add_user),
-                        label: const Text("Add Contact")))
+                        label: const Text("Add Contact")),
+                )
               ],
             ),
           )
