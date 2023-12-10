@@ -5,30 +5,52 @@ import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 
 class EditContactPage extends StatefulWidget {
-  const EditContactPage({
-    Key? key,
-    required this.avatar,
-    required this.email,
-    required this.name,
-    required this.phone
-    }) : super(key: key);
-  
+  const EditContactPage(
+      {Key? key,
+      required this.avatar,
+      required this.email,
+      required this.name,
+      required this.phone,
+      required this.id   })
+      : super(key: key);
+
   final String avatar;
   final String name;
   final String phone;
   final String email;
-  
+  final String id;
+
   @override
   State<EditContactPage> createState() => _EditContactPageState();
 }
 
 class _EditContactPageState extends State<EditContactPage> {
   final _formKey = GlobalKey<FormState>();
-  late final TextEditingController nameController ;
-  late final TextEditingController phoneController ;
-  late final TextEditingController emailController ;
-  
-  void editContact() async{}
+  late final TextEditingController nameController;
+  late final TextEditingController phoneController;
+  late final TextEditingController emailController;
+
+  void editContact() async {
+    if (_formKey.currentState!.validate()) {
+      try {
+        await FirebaseFirestore.instance
+        .collection('contacts')
+        .doc(widget.id)
+        .update({
+          "name":nameController.text.trim(),
+          "phone":phoneController.text.trim(),
+          "email":emailController.text.trim(),
+        });
+        if (mounted) {
+          Navigator.pop(context);
+        }
+      } on FirebaseException {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content:Text("Failed to add Contact"),
+        ));
+      }
+    }
+  }
 
   @override
   void initState() {
@@ -43,7 +65,6 @@ class _EditContactPageState extends State<EditContactPage> {
     );
     super.initState();
   }
-
   @override
   void dispose() {
     nameController.dispose();
@@ -64,6 +85,16 @@ class _EditContactPageState extends State<EditContactPage> {
             key: _formKey,
             child: Column(
               children: [
+                Center(
+                  child: Hero(
+                    tag: widget.id,
+                    child: CircleAvatar(
+                      radius: 60,
+                      backgroundImage: NetworkImage(widget.avatar),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
                 TextFormField(
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   controller: nameController,
@@ -115,11 +146,11 @@ class _EditContactPageState extends State<EditContactPage> {
                 ),
                 const SizedBox(height: 40),
                 SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton.icon(
-                        onPressed: editContact,
-                        icon: const Icon(IconlyBroken.add_user),
-                        label: const Text("Add Contact")),
+                  width: double.infinity,
+                  child: ElevatedButton.icon(
+                      onPressed: editContact,
+                      icon: const Icon(IconlyBroken.edit_square),
+                      label: const Text("Edit Contact")),
                 )
               ],
             ),

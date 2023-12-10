@@ -54,8 +54,11 @@ class _HomePageState extends State<HomePage> {
                 return ListTile(
                   title: Text(name),
                   subtitle: Text("$phone \n$email"),
-                  leading: CircleAvatar(
-                    backgroundImage: NetworkImage(avatar),
+                  leading: Hero(
+                    tag: contactId,
+                    child: CircleAvatar(
+                      backgroundImage: NetworkImage(avatar),
+                    ),
                   ),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -70,6 +73,7 @@ class _HomePageState extends State<HomePage> {
                                 name: name,
                                 phone: phone,
                                 email: email,
+                                id: contactId,
                               ),
                             ),
                           );
