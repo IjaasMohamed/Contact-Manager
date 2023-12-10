@@ -12,6 +12,14 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final contactsCollection =
       FirebaseFirestore.instance.collection("contacts").snapshots();
+  void deleteContact(String id) async {
+    await FirebaseFirestore.instance.collection('contacts').doc(id).delete();
+    if (mounted) {
+      ScaffoldMessenger.of(context)
+        .showSnackBar(const SnackBar(content: Text("Contact Successfully deleted")));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +56,17 @@ class _HomePageState extends State<HomePage> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       IconButton(
-                          onPressed: () {}, icon: const Icon(IconlyBroken.edit))
+                        onPressed: () {},
+                        icon: const Icon(IconlyBroken.edit),
+                        splashRadius: 24,
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          deleteContact(contactId);
+                        },
+                        icon: const Icon(IconlyBroken.delete),
+                        splashRadius: 24,
+                      ),
                     ],
                   ),
                 );
