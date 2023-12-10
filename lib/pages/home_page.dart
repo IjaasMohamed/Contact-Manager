@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:contact_manager/pages/add_contact_page.dart';
+import 'package:contact_manager/pages/edit_contact_page.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 
@@ -15,8 +16,9 @@ class _HomePageState extends State<HomePage> {
   void deleteContact(String id) async {
     await FirebaseFirestore.instance.collection('contacts').doc(id).delete();
     if (mounted) {
-      ScaffoldMessenger.of(context)
-        .showSnackBar(const SnackBar(content: Text("Contact Successfully deleted")));
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Contact Successfully deleted")),
+      );
     }
   }
 
@@ -52,11 +54,26 @@ class _HomePageState extends State<HomePage> {
                 return ListTile(
                   title: Text(name),
                   subtitle: Text("$phone \n$email"),
+                  leading: CircleAvatar(
+                    backgroundImage: NetworkImage(avatar),
+                  ),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => EditContactPage(
+                                avatar: avatar,
+                                name: name,
+                                phone: phone,
+                                email: email,
+                              ),
+                            ),
+                          );
+                        },
                         icon: const Icon(IconlyBroken.edit),
                         splashRadius: 24,
                       ),

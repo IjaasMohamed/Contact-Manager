@@ -4,43 +4,47 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 
-class AddContactPage extends StatefulWidget {
-  const AddContactPage({super.key});
-
+class EditContactPage extends StatefulWidget {
+  const EditContactPage({
+    Key? key,
+    required this.avatar,
+    required this.email,
+    required this.name,
+    required this.phone
+    }) : super(key: key);
+  
+  final String avatar;
+  final String name;
+  final String phone;
+  final String email;
+  
   @override
-  State<AddContactPage> createState() => _AddContactPageState();
+  State<EditContactPage> createState() => _EditContactPageState();
 }
 
-class _AddContactPageState extends State<AddContactPage> {
+class _EditContactPageState extends State<EditContactPage> {
   final _formKey = GlobalKey<FormState>();
-  final nameController = TextEditingController();
-  final phoneController = TextEditingController();
-  final emailController = TextEditingController();
+  late final TextEditingController nameController ;
+  late final TextEditingController phoneController ;
+  late final TextEditingController emailController ;
   
-  void addContact() async {
-    if (_formKey.currentState!.validate()){
-      try {
-        await FirebaseFirestore.instance.collection("contacts").add({
-          "name": nameController.text.trim(),
-          "phone":phoneController.text.trim(),
-          "email":emailController.text.trim(),
-        });
-        if (mounted) {
-          Navigator.pop(context);
-        }
-      } on FirebaseException {
-        ScaffoldMessenger.of(context).showSnackBar( 
-        const SnackBar(content: Text("Failed to add contact")),
-      );
-      }
-    } 
-    else {
-      ScaffoldMessenger.of(context).showSnackBar( 
-          const SnackBar(content: Text("Please fill all the fields")),
-      );
-    }
+  void editContact() async{}
+
+  @override
+  void initState() {
+    nameController = TextEditingController(
+      text: widget.name,
+    );
+    phoneController = TextEditingController(
+      text: widget.phone,
+    );
+    emailController = TextEditingController(
+      text: widget.email,
+    );
+    super.initState();
   }
-    @override
+
+  @override
   void dispose() {
     nameController.dispose();
     phoneController.dispose();
@@ -51,7 +55,7 @@ class _AddContactPageState extends State<AddContactPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Add Contact"),
+        title: const Text("Edit Contact"),
       ),
       body: ListView(
         padding: const EdgeInsets.all(14),
@@ -113,7 +117,7 @@ class _AddContactPageState extends State<AddContactPage> {
                 SizedBox(
                     width: double.infinity,
                     child: ElevatedButton.icon(
-                        onPressed: addContact,
+                        onPressed: editContact,
                         icon: const Icon(IconlyBroken.add_user),
                         label: const Text("Add Contact")),
                 )
