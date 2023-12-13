@@ -1,8 +1,4 @@
-![Screenshot_1702226122](https://github.com/IjaasMohamed/Contact-Manager/assets/96341377/8f63a064-c8f7-42db-81d2-5c39d597bfa8)
-![Screenshot_1702226200](https://github.com/IjaasMohamed/Contact-Manager/assets/96341377/4aa5f4c8-544e-438f-98aa-6b6faac97b45)
-![Screenshot_1702226231](https://github.com/IjaasMohamed/Contact-Manager/assets/96341377/e59b209f-cd15-4272-b95f-58455c10aac1)
-![Screenshot_1702226254](https://github.com/IjaasMohamed/Contact-Manager/assets/96341377/47687fd3-7334-4fee-b08c-76b7f26c1431)
-![Screenshot_1702226265](https://github.com/IjaasMohamed/Contact-Manager/assets/96341377/68870674-aee2-4e25-9f65-39f7a2f80415)
+![made](https://github.com/IjaasMohamed/Contact-Manager/assets/96341377/f65e5315-7fff-474f-b9dd-827704025815)
 
 # contact_manager
 
